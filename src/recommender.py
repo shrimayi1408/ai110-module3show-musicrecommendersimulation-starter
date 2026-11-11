@@ -63,12 +63,15 @@ def load_songs(csv_path: str) -> List[Dict]:
     print(f"Loaded {len(songs)} songs from {csv_path}")
     return songs
 
-# Scoring weights (10-point max). Edit these to run weight experiments.
-CATEGORICAL_WEIGHTS = {"mood": 3.0, "genre": 2.0}
-NUMERIC_WEIGHTS = {"energy": 2.0, "valence": 1.0, "acousticness": 1.0, "danceability": 1.0}
+# Scoring weights. Edit these to run weight experiments.
+# Experiment: energy doubled (2.0 -> 4.0), genre halved (2.0 -> 1.0).
+CATEGORICAL_WEIGHTS = {"mood": 3.0, "genre": 1.0}
+NUMERIC_WEIGHTS = {"energy": 4.0, "valence": 1.0, "acousticness": 1.0, "danceability": 1.0}
+# Derived so the max score always matches the weights (now 11.0, not 10).
+MAX_SCORE = sum(CATEGORICAL_WEIGHTS.values()) + sum(NUMERIC_WEIGHTS.values())
 
 def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
-    """Score one song against user preferences (max 10), returning (score, reasons)."""
+    """Score one song against user preferences (max MAX_SCORE), returning (score, reasons)."""
     score = 0.0
     reasons: List[str] = []
 
@@ -88,6 +91,9 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
         reasons.append(
             f"{feature} {song[feature]:.2f} vs target {target:.2f} (+{earned:.2f})"
         )
+
+    if not reasons:
+        reasons.append("no matching preferences (score 0.0)")
 
     return score, reasons
 
