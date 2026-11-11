@@ -4,6 +4,7 @@
 
 Give your model a short, descriptive name.  
 Example: **VibeFinder 1.0**  
+Vibezically
 
 ---
 
@@ -21,16 +22,20 @@ Prompts:
 
 ## 3. How the Model Works  
 
-Explain your scoring approach in simple language.  
+Think of the recommender as a judge at a talent show. Every song gets marked out of 10 for how well it fits what the listener asked for, and the highest scores are recommended.
 
-Prompts:  
+The listener picks a mood and genre and describes the sound they want: energy, upbeat feel, acoustic feel and danceability. Anything they leave out isn't judged.
 
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
+Each song earns points like this:
 
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+- **Mood, up to 3 points:** all or nothing, and the most important match.
+- **Genre, up to 2 points:** all or nothing.
+- **Energy, up to 2 points:** the closer to what the listener wants, the more points.
+- **Upbeat feel, acoustic sound and danceability, up to 1 point each:** scored by closeness, like energy.
+
+The points are added up, and ties go to the song with the closer energy. Each recommendation also lists where its points came from, such as "mood match (+3.0)", so you can see why it was picked.
+
+**Change from the starter:** the starter only had empty placeholders. I added reading the song list, the scoring above, and ranking with readable reasons.
 
 ---
 

@@ -26,9 +26,9 @@ Some prompts to answer:
 - What information does your `UserProfile` store
 - How does your `Recommender` compute a score for each song
 - How do you choose which songs to recommend
-
 You can include a simple diagram or bullet list if helpful.
 
+Real-world platforms like Spotify and YouTube predict what you'll love next by combining several signals. They use collaborative filtering (what similar users played, skipped, or saved) and content-based filtering (the attributes of the songs themselves). A candidate stage narrows millions of songs down, and a ranking stage orders what's left. My version is a simple content-based recommender, so it can only use song attributes and a single user's stated taste, not other users' behavior. It scores each song by how close its energy is to the user's target, instead of rewarding higher or lower values. It gives a mood match more weight than a genre match, since genre is sparse in the small catalog. It also lets acousticness matter more when the user wants high-energy music. A separate ranking step then sorts the scored songs and returns the top k, with reasons attached. Prioritizing explainability and closeness over raw popularity means it can't discover surprising tastes the way collaborative filtering can. In exchange, every recommendation can be traced back to specific features.
 ---
 
 ## Getting Started
